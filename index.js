@@ -1,12 +1,30 @@
-import './style';
-import { Component } from 'preact';
+import './style'
+import { Component } from 'preact'
+
+import Display from './components/display'
+import Keypad from './components/keypad'
 
 export default class App extends Component {
-	render() {
+	state = {
+		payValue: '0'
+	}
+
+	handleInput = (e) => {
+		this.setState((state, props) => {
+			return {
+				payValue: [...this.state.payValue, e.target.innerText]
+			}
+		})
+		const width = document.getElementById('display').clientWidth + 67
+		console.log(width)
+	}
+
+	render({}, {payValue}) {
 		return (
-			<div>
-				<h1>Hello, World!</h1>
+			<div class='root'>
+				<Display value={payValue}/>
+				<Keypad click={this.handleInput}/>
 			</div>
-		);
+		)
 	}
 }
