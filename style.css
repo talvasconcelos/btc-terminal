@@ -1,40 +1,102 @@
 html, body {
-	font: 14px/1.21 'Helvetica Neue', arial, sans-serif;
+	font: 16px/1.21 -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
 	font-weight: 400;
 	margin: 0;
+	box-sizing: border-box;
 }
 
 .root{
 	display: grid;	
 	height: 100vh;
-	grid-template-rows: 1fr 1.5fr;
+	grid-template-rows: 1fr 1.5fr 0.25fr;
+	max-width: 640px;
+	margin: 0 auto;
 }
+
+.overlay{
+	position: absolute;
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.8);
+	z-index: 2;
+}
+
+.modal{
+	position: relative;
+	background: #fff;
+	margin: 20px;
+	padding: 10px;
+	border-radius: 5px;
+}
+
+/* .modal > input{
+	display: block;
+	width: 90%;
+	height: 28px;
+	margin: 50px auto;
+} */
 
 .display{
 	display: flex;
-	background: pink;
 	align-items: center;
 	justify-content: center;
-	overflow: hidden;
 	padding: 20px;
+	overflow: hidden;
 }
 
-.display > input{
+.display > span{
 	font-size: 120px;
+	text-align: center;
+}
+
+.small{
+	font-size: 50%;
+	margin-right: 5px;
+	color: rgba(0,0,0,0.75)
 }
 
 .keypad{
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-rows: 1fr 1fr 1fr 1fr;
-	grid-gap: 5px;
-	margin: 5px;
+	grid-gap: 10px;
+	padding: 10px;
 }
 
 .keypad > div{
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: papayawhip;
-	font-size: 28px;
+	font-size: 2.5em;
+	min-height: 56px;
+	border-radius: 5px;
+	background: gainsboro;
+}
+
+
+.buttons{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	padding: 5px;
+	grid-gap: 10px;
+}
+
+.btn{
+	font-size: 20px;
+	border: none;
+	border-radius: 5px;
+	color: #fff;
+	min-height: 56px;
+	min-width: 100px;
+}
+
+.confirm{
+	background: green;
+}
+
+.cancel{
+	background: red;
 }
