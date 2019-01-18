@@ -1,4 +1,5 @@
 import './style'
+import 'antd/dist/antd.css'
 import { Component } from 'preact'
 import { checkCookie, getCookie, setCookie, getWidth } from './utils'
 
@@ -6,7 +7,7 @@ import BTCPay from './components/btcpayserver'
 import Buttonrow from './components/buttonrow'
 import Display from './components/display'
 import Keypad from './components/keypad'
-import Modal from './components/modal'
+import BoardingModal from './components/boardingmodal'
 
 export default class App extends Component {
 	state = {
@@ -73,7 +74,6 @@ export default class App extends Component {
 	}
 
 	boarding = (e) => {
-		e.preventDefault()
 		const cookie = `btcpayurl=${this.state.btcpayurl}`
 		setCookie(cookie)
 		// document.cookie = cookie
@@ -82,31 +82,29 @@ export default class App extends Component {
 
 	componentDidMount = () => {
 		const url = checkCookie('btcpayurl')
-		if(!url){
+		if(!url || url == 'null'){
 			return this.setState({onBoarding: true})
 		}
-		const btcpayurl = url[0].trim().split('=')[1]
+		console.log(url)
+		const btcpayurl = url
 		this.setState({btcpayurl})
 	}
 
 	render({}, {clientConfirm, onBoarding, payValue, fontSize, sanitizedValue}) {
 		return (
 			<div class='root'>
-				{clientConfirm && 
+				{/* {clientConfirm && 
 					<Modal>
 						<h2>{`Pay €${sanitizedValue.toFixed(2)} with BTC`}</h2>
 						<BTCPay value={sanitizedValue} url={this.state.btcpayurl} cancel={this.handleCancel}/>
 					</Modal>
+				} */}
+				{onBoarding && <BoardingModal 
+					visible={onBoarding} 
+					change={this.handleURL} 
+					click={this.boarding} 
+					url={this.state.btcpayurl} />
 				}
-				{onBoarding && 
-				<Modal>
-					<h1>Settings</h1>
-					<h3>Enter BTCPay Server URL</h3>
-					<form>
-						<input type="url" name="url" value={this.state.btcpayurl} onChange={this.handleURL} />
-						<input class='btn confirm' type='submit' value='Ok' onClick={this.boarding} />
-					</form>
-				</Modal>}
 				<Display value={payValue} fontSize={fontSize} />
 				<Keypad click={this.handleInput} client={clientConfirm}/>
 				<Buttonrow confirm={this.handleConfirm} cancel={this.handleCancel}  />

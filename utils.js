@@ -25,5 +25,5 @@ export const checkCookie = (cookie) => {
     const c = getCookie()
     const includes = c.filter(v => v.includes(cookie))
     console.log('Check', includes)
-    return (includes)
+    return includes.length ? includes[0].trim().split('=')[1] : false
 }
