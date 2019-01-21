@@ -27,3 +27,9 @@ export const checkCookie = (cookie) => {
     console.log('Check', includes)
     return includes.length ? includes[0].trim().split('=')[1] : false
 }
+
+export const validateUrl = (URL) => {
+    const pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+    console.log(URL, pattern.test(URL))
+    return pattern.test(URL)
+}

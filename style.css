@@ -2,13 +2,42 @@ html, body {
 	font: 16px/1.21 -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
 	font-weight: 400;
 	margin: 0;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* fallback */
+@font-face {
+	font-family: 'Material Icons';
+	font-style: normal;
+	font-weight: 400;
+	src: url(https://fonts.gstatic.com/s/materialicons/v29/2fcrYFNaTjcS6g4U3t-Y5UEw0lE80llgEseQY3FEmqw.woff2) format('woff2');
+}
+  
+.material-icons {
+	font-family: 'Material Icons';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 24px;
+	line-height: 1;
+	letter-spacing: normal;
+	text-transform: none;
+	display: inline-block;
+	white-space: nowrap;
+	word-wrap: normal;
+	direction: ltr;
+	-webkit-font-feature-settings: 'liga';
+	-webkit-font-smoothing: antialiased;
+}
+
+* {
 	box-sizing: border-box;
 }
 
 .root{
 	display: grid;	
 	height: 100vh;
-	grid-template-rows: 1fr 1.5fr 0.25fr;
+	grid-template-rows: 0.25fr 1fr 1.5fr 0.25fr;
 	max-width: 640px;
 	margin: 0 auto;
 }
@@ -31,13 +60,6 @@ html, body {
 	padding: 10px;
 	border-radius: 5px;
 }
-
-/* .modal > input{
-	display: block;
-	width: 90%;
-	height: 28px;
-	margin: 50px auto;
-} */
 
 .display{
 	display: flex;
