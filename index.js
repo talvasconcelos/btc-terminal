@@ -47,7 +47,7 @@ export default class App extends Component {
 		}
 	}
 
-	handleInput = async (e) => {
+	handleInput = (e) => {
 		if(this.state.clientConfirm) return
 		const key = e.target.innerText
 		let value = this.state.payValue
@@ -60,7 +60,7 @@ export default class App extends Component {
 		}
 		if(key == '.' && value.includes(key)) return
 		if(!value.length && key == '.') return this.setState({payValue: '0.'})
-		await this.setState((state, props) => {
+		this.setState((state, props) => {
 			value = state.payValue + e.target.innerText
 			return { payValue: value, sanitizedValue: Math.round(parseFloat(value) * 100) / 100 }
 		})
