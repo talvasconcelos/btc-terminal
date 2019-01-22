@@ -22,6 +22,8 @@ When you want to receive a Bitcoin payment just enter the amount, ask the costum
 Thanks to BTCPay Server for the awesome work they are doing and to BTCPay Jungle for allowing the use of the server.
 
 If you like my work and want to buy me a beer:
+
+{::nomarkdown}
 <form method="POST" action="https://btcpayjungle.com/api/v1/invoices">
     <input type="hidden" name="storeId" value="J4d3u63nPu5cqcip7fUztQVRTc96a1N7qyDQAnZ9xE3P" />
     <input type="hidden" name="price" value="5" />
@@ -30,5 +32,6 @@ If you like my work and want to buy me a beer:
     <input type="hidden" name="notifyEmail" value="talvasconcelos@gmail.com" />
     <input type="image" src="https://btcpayjungle.com/img/paybutton/pay.png" name="submit" style="width:168px" alt="Pay with BtcPay, Self-Hosted Bitcoin Payment Processor">
 </form>
+{:/}
 
 Also i have a [crowdfund](https://btcpayjungle.com/apps/EDqY93dMrcmToQjQjgWn97W4fNY/crowdfund) going on, go check it out and share it... :)
