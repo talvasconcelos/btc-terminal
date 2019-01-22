@@ -1,12 +1,16 @@
+import 'preact-material-components/style.css'
 import './style'
 import { Component } from 'preact'
-import { checkCookie, getCookie, setCookie, getWidth } from './utils'
+import { checkCookie, setCookie, getWidth, validateUrl } from './utils'
+
+import Dialog from 'preact-material-components/Dialog'
 
 import BTCPay from './components/btcpayserver'
 import Buttonrow from './components/buttonrow'
 import Display from './components/display'
 import Keypad from './components/keypad'
-import Modal from './components/modal'
+import BoardingModal from './components/boardingmodal'
+import TopBar from './components/topbar'
 
 export default class App extends Component {
 	state = {
@@ -14,7 +18,18 @@ export default class App extends Component {
 		sanitizedValue: 0,
 		fontSize: 120,
 		clientConfirm: false,
-		btcpayurl: null //'https://testnet.demo.btcpayserver.org/apps/3paj2kB8xK2vcf4PNcvLzycT2KnM/pos'
+		btcpayOpen: false,
+		btcpayurl: null
+	}
+
+	resetURL = () => {
+		this.setState({btcpayurl: null, onBoarding: true})
+		const cookie = `btcpayurl=null`
+		setCookie(cookie)
+	}
+
+	checkInvoices = () => {
+		return
 	}
 
 	checkSize = () => {
@@ -32,20 +47,19 @@ export default class App extends Component {
 		}
 	}
 
-	handleInput = async (e) => {
+	handleInput = (e) => {
 		if(this.state.clientConfirm) return
 		const key = e.target.innerText
 		let value = this.state.payValue
 		if(key == 'C') {
 			value = value.substring(0, value.length - 1)
-			// if(value[value.length - 1] == '.'){value = value.substring(0, value.length - 1)}
 			if(value == '0'){value = ''}
 			this.setState({payValue: value, sanitizedValue: Math.round(parseFloat(value) * 100) / 100})
 			return this.checkSize()
 		}
 		if(key == '.' && value.includes(key)) return
 		if(!value.length && key == '.') return this.setState({payValue: '0.'})
-		await this.setState((state, props) => {
+		this.setState((state, props) => {
 			value = state.payValue + e.target.innerText
 			return { payValue: value, sanitizedValue: Math.round(parseFloat(value) * 100) / 100 }
 		})
@@ -59,6 +73,10 @@ export default class App extends Component {
 		this.setState({clientConfirm: true})
 	}
 
+	openPayment = () => {
+		document.btcpay.submit()
+	}
+
 	handleCancel = () => {
 		if(this.state.payValue === '') return
 		return this.setState({
@@ -69,44 +87,53 @@ export default class App extends Component {
 	}
 
 	handleURL = (e) => {
-		return this.setState({btcpayurl: e.target.value})
+		const url = e.target.value
+		if(validateUrl(url)){
+			this.setState({btcpayurl: e.target.value})
+		}
 	}
 
-	boarding = (e) => {
-		e.preventDefault()
-		const cookie = `btcpayurl=${this.state.btcpayurl}`
-		setCookie(cookie)
-		// document.cookie = cookie
-		this.setState({onBoarding: false})
+	boarding = () => {
+		const url = this.state.btcpayurl
+		if(validateUrl(url)){
+			const cookie = `btcpayurl=${url}`
+			setCookie(cookie)
+			this.setState({onBoarding: false})
+		}
 	}
 
 	componentDidMount = () => {
 		const url = checkCookie('btcpayurl')
-		if(!url){
+		if(!url || url == 'null'){
 			return this.setState({onBoarding: true})
 		}
-		const btcpayurl = url[0].trim().split('=')[1]
+		console.log(url)
+		const btcpayurl = url
 		this.setState({btcpayurl})
 	}
 
 	render({}, {clientConfirm, onBoarding, payValue, fontSize, sanitizedValue}) {
 		return (
 			<div class='root'>
+				<TopBar erase={this.resetURL}/>
+				{onBoarding && <BoardingModal 
+					open={onBoarding} 
+					click={this.boarding} 
+					change={this.handleURL}
+					url={this.state.btcpayurl} />}
 				{clientConfirm && 
-					<Modal>
-						<h2>{`Pay €${sanitizedValue.toFixed(2)} with BTC`}</h2>
-						<BTCPay value={sanitizedValue} url={this.state.btcpayurl} cancel={this.handleCancel}/>
-					</Modal>
+					<Dialog class='mdc-dialog--open'>
+						<Dialog.Header>Confirm value</Dialog.Header>
+						<Dialog.Body>
+							<h2>{`Pay €${sanitizedValue.toFixed(2)} with BTC`}</h2>
+							<BTCPay value={sanitizedValue} url={this.state.btcpayurl} />
+						</Dialog.Body>
+						<Dialog.Footer>
+							<Dialog.FooterButton cancel={true} onClick={this.handleCancel}>Decline</Dialog.FooterButton>
+							<Dialog.FooterButton accept={true} onClick={this.openPayment}>Accept</Dialog.FooterButton>
+						</Dialog.Footer>
+					</Dialog>
 				}
-				{onBoarding && 
-				<Modal>
-					<h1>Settings</h1>
-					<h3>Enter BTCPay Server URL</h3>
-					<form>
-						<input type="url" name="url" value={this.state.btcpayurl} onChange={this.handleURL} />
-						<input class='btn confirm' type='submit' value='Ok' onClick={this.boarding} />
-					</form>
-				</Modal>}
 				<Display value={payValue} fontSize={fontSize} />
 				<Keypad click={this.handleInput} client={clientConfirm}/>
 				<Buttonrow confirm={this.handleConfirm} cancel={this.handleCancel}  />
