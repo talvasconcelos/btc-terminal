@@ -1,7 +1,7 @@
-import './style'
 import 'preact-material-components/style.css'
+import './style'
 import { Component } from 'preact'
-import { checkCookie, getCookie, setCookie, getWidth, validateUrl } from './utils'
+import { checkCookie, setCookie, getWidth, validateUrl } from './utils'
 
 import Dialog from 'preact-material-components/Dialog'
 
@@ -19,7 +19,7 @@ export default class App extends Component {
 		fontSize: 120,
 		clientConfirm: false,
 		btcpayOpen: false,
-		btcpayurl: null //'https://testnet.demo.btcpayserver.org/apps/3paj2kB8xK2vcf4PNcvLzycT2KnM/pos'
+		btcpayurl: null
 	}
 
 	resetURL = () => {
@@ -53,7 +53,6 @@ export default class App extends Component {
 		let value = this.state.payValue
 		if(key == 'C') {
 			value = value.substring(0, value.length - 1)
-			// if(value[value.length - 1] == '.'){value = value.substring(0, value.length - 1)}
 			if(value == '0'){value = ''}
 			this.setState({payValue: value, sanitizedValue: Math.round(parseFloat(value) * 100) / 100})
 			return this.checkSize()

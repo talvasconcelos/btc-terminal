@@ -14,7 +14,7 @@ const TopBar = ({erase}) => {
     }
 
     return (
-        <div>
+        <div class='nav'>
             <TopAppBar class="topappbar">
                 <TopAppBar.Row>
                 <TopAppBar.Section align-start>
@@ -27,7 +27,8 @@ const TopBar = ({erase}) => {
             </TopAppBar>
             <Drawer 
                 modal 
-                ref={drawerRef}>
+                ref={drawerRef}
+            >
                 <Drawer.DrawerContent>
                     <Drawer.DrawerItem selected onClick={resetURL}>
                         <List.ItemGraphic>cancel</List.ItemGraphic>

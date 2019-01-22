@@ -1,3 +1,15 @@
+:root{
+	--mdc-theme-primary: #329f80;
+	--mdc-theme-secondary: #2284A6;
+}
+
+.mdc-drawer .mdc-list-item--activated{
+	color: var(--mdc-theme-primary);
+}
+.mdc-drawer .mdc-list-item--activated .mdc-list-item__graphic{
+	color:var(--mdc-theme-primary);
+}
+
 html, body {
 	font: 16px/1.21 -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
 	font-weight: 400;
@@ -32,6 +44,11 @@ html, body {
 
 * {
 	box-sizing: border-box;
+}
+
+
+.topappbar{
+	max-width: 640px;
 }
 
 .root{
