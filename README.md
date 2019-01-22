@@ -30,5 +30,4 @@ If you like my work and want to buy me a beer:
     <input type="hidden" name="notifyEmail" value="talvasconcelos@gmail.com" />
     <input type="image" src="https://btcpayjungle.com/img/paybutton/pay.png" name="submit" style="width:168px" alt="Pay with BtcPay, Self-Hosted Bitcoin Payment Processor">
 </form>
-
 Also i have a [crowdfund](https://btcpayjungle.com/apps/EDqY93dMrcmToQjQjgWn97W4fNY/crowdfund) going on, go check it out and share it... :)
