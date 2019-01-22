@@ -48,14 +48,14 @@ html, body {
 
 
 .topappbar{
-	max-width: 640px;
+	max-width: 450px;
 }
 
 .root{
 	display: grid;	
 	height: 100vh;
 	grid-template-rows: 0.25fr 1fr 1.5fr 0.25fr;
-	max-width: 640px;
+	max-width: 450px;
 	margin: 0 auto;
 }
 
@@ -121,6 +121,10 @@ html, body {
 	grid-template-columns: 1fr 1fr;
 	padding: 5px;
 	grid-gap: 10px;
+}
+
+.buttons > button {
+	height: 100%;
 }
 
 .btn{
