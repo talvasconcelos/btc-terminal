@@ -111,7 +111,7 @@ export default class App extends Component {
 	}
 
 	componentDidMount = () => {
-		idbUrl('check').then(res => {
+		idbUrl().then(res => {
 			const url = res
 			// const url = checkCookie('btcpayurl')		
 			if(!url){

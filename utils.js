@@ -57,7 +57,7 @@ export const idbUrl = (url = false) => {
                 console.log('[Transaction] ALL DONE!');
             }
     
-            if(url === 'check'){
+            if(!url){
                 URL.get(1).onsuccess = (event) => {
                     let _url = event.target.result.url || false
                     console.log('Get:', _url)                
