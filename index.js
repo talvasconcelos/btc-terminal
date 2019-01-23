@@ -114,8 +114,7 @@ export default class App extends Component {
 		idbUrl('check').then(res => {
 			const url = res
 			// const url = checkCookie('btcpayurl')		
-			if(!url || url == 'undefined'){
-				console.log('Not url', url)
+			if(!url){
 				return this.setState({onBoarding: true})
 			}
 			console.log(url)

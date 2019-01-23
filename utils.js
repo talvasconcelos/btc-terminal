@@ -59,7 +59,7 @@ export const idbUrl = (url = false) => {
     
             if(url === 'check'){
                 URL.get(1).onsuccess = (event) => {
-                    let _url = event.target.result.url
+                    let _url = event.target.result.url || false
                     console.log('Get:', _url)                
                     return resolve(_url)
                 }
