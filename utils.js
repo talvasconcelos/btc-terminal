@@ -33,3 +33,56 @@ export const validateUrl = (URL) => {
     console.log(URL, pattern.test(URL))
     return pattern.test(URL)
 }
+
+export const idbUrl = (url = false) => {
+    return new Promise(resolve => {
+
+        let db
+    
+        const request = window.indexedDB.open("btctpa", 1)
+    
+        request.onerror = (event) => {
+            // Do something with request.errorCode!
+            console.error("Database error: " + event.target.errorCode)
+        }
+    
+        request.onsuccess = (event) => {
+            // Do something with request.result!
+            db = event.target.result
+            const transaction = db.transaction('URL', 'readwrite')
+    
+            const URL = transaction.objectStore('URL')
+    
+            transaction.onsuccess = function(event) {
+                console.log('[Transaction] ALL DONE!');
+            }
+    
+            if(!url){
+                URL.get(1).onsuccess = (event) => {
+                    let _url = event.target.result.url
+                    console.log('Get:', _url)                
+                    return resolve(_url)
+                    // return _url
+                }
+            } else {
+                console.log(url)
+                const btcpayurl = {id: 1, url}
+                const add = URL.add(btcpayurl)
+                add.onsuccess = (event) => {
+                    console.log(event.result)
+                    return resolve(event.result)
+                }
+            }
+    
+            // URL.add(btcpayurl)
+        }
+    
+        request.onupgradeneeded = (event) => {
+            // create object store from db or event.target.result
+            db = event.target.result
+            // const transaction = db.transaction('URL', 'readwrite')
+            const URL = db.createObjectStore('URL', {keyPath: 'id'})
+            console.log('Upgrade')
+        }
+    })
+}

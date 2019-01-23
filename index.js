@@ -1,7 +1,13 @@
+// window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB
+
+if (!window.indexedDB) {
+    window.alert("Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available.")
+}
+
 import 'preact-material-components/style.css'
 import './style'
 import { Component } from 'preact'
-import { checkCookie, setCookie, getWidth, validateUrl } from './utils'
+import { checkCookie, setCookie, getWidth, validateUrl, idbUrl } from './utils'
 
 import Dialog from 'preact-material-components/Dialog'
 
@@ -24,8 +30,8 @@ export default class App extends Component {
 
 	resetURL = () => {
 		this.setState({btcpayurl: null, onBoarding: true})
-		const cookie = `btcpayurl=null`
-		setCookie(cookie)
+		// const cookie = `btcpayurl=null`
+		// setCookie(cookie)
 	}
 
 	checkInvoices = () => {
@@ -96,20 +102,26 @@ export default class App extends Component {
 	boarding = () => {
 		const url = this.state.btcpayurl
 		if(validateUrl(url)){
-			const cookie = `btcpayurl=${url}`
-			setCookie(cookie)
+			idbUrl(url)
+			// const cookie = `btcpayurl=${url}`
+			// setCookie(cookie)
 			this.setState({onBoarding: false})
 		}
 	}
 
 	componentDidMount = () => {
-		const url = checkCookie('btcpayurl')
-		if(!url || url == 'null'){
-			return this.setState({onBoarding: true})
-		}
-		console.log(url)
-		const btcpayurl = url
-		this.setState({btcpayurl})
+		idbUrl().then(res => {
+			const url = res
+			// const url = checkCookie('btcpayurl')		
+			if(!url || url == 'undefined'){
+				console.log('Not url', url)
+				return this.setState({onBoarding: true})
+			}
+			console.log(url)
+			// const btcpayurl = res
+			this.setState({btcpayurl: url})
+		})
+		
 	}
 
 	render({}, {clientConfirm, onBoarding, payValue, fontSize, sanitizedValue}) {
