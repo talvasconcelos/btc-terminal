@@ -9,8 +9,8 @@ const Keypad = ({click}) => {
     return (
         <div class='keypad'>
             {pad.map(v => {
-                return (<Button raised style={styles} onClick={click}>
-                    <span class='mdc-typography mdc-typography--headline4'>{v}</span>
+                return (<Button raised class='mdc-typography mdc-typography--headline4' style={styles} onClick={click}>
+                    {v}
                 </Button>)
                 }) }
         </div>
