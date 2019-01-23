@@ -30,7 +30,7 @@ export const checkCookie = (cookie) => {
 
 export const validateUrl = (URL) => {
     const pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-    console.log(URL, pattern.test(URL))
+    
     return pattern.test(URL)
 }
 
@@ -59,18 +59,18 @@ export const idbUrl = (url = false) => {
     
             if(!url){
                 URL.get(1).onsuccess = (event) => {
-                    let _url = event.target.result.url || false
-                    console.log('Get:', _url)                
-                    return resolve(_url)
+                    const e = event.target.result
+                    //console.log(e)
+                    return resolve(e)
                 }
             } 
 
             if(url === 'reset') {
                 URL.delete(1).onsuccess = (event) => {
                     console.log('URL Deleted')
-                    return
+                    return resolve(false)
                 }
-            } else {
+            } else if(url){
                 console.log(url)
                 const btcpayurl = {id: 1, url}
                 const add = URL.add(btcpayurl)

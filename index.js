@@ -117,9 +117,8 @@ export default class App extends Component {
 			if(!url){
 				return this.setState({onBoarding: true})
 			}
-			console.log(url)
 			// const btcpayurl = res
-			this.setState({btcpayurl: url})
+			this.setState({btcpayurl: url.url})
 		})
 		
 	}
