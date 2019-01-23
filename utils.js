@@ -64,6 +64,13 @@ export const idbUrl = (url = false) => {
                     return resolve(_url)
                     // return _url
                 }
+            } 
+
+            if(url === 'reset') {
+                URL.delete(1).onsuccess = (event) => {
+                    console.log('URL Deleted')
+                    return
+                }
             } else {
                 console.log(url)
                 const btcpayurl = {id: 1, url}
@@ -73,8 +80,6 @@ export const idbUrl = (url = false) => {
                     return resolve(event.result)
                 }
             }
-    
-            // URL.add(btcpayurl)
         }
     
         request.onupgradeneeded = (event) => {

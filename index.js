@@ -29,6 +29,7 @@ export default class App extends Component {
 	}
 
 	resetURL = () => {
+		idbUrl('reset')
 		this.setState({btcpayurl: null, onBoarding: true})
 		// const cookie = `btcpayurl=null`
 		// setCookie(cookie)
