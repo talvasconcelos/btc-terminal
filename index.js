@@ -10,6 +10,7 @@ import { Component } from 'preact'
 import { checkCookie, setCookie, getWidth, validateUrl, idbUrl } from './utils'
 
 import Dialog from 'preact-material-components/Dialog'
+import TextField from 'preact-material-components/TextField'
 
 import BTCPay from './components/btcpayserver'
 import Buttonrow from './components/buttonrow'
@@ -25,7 +26,8 @@ export default class App extends Component {
 		fontSize: 120,
 		clientConfirm: false,
 		btcpayOpen: false,
-		btcpayurl: null
+		btcpayurl: null,
+		orderId: null
 	}
 
 	resetURL = () => {
@@ -89,7 +91,8 @@ export default class App extends Component {
 		return this.setState({
 			payValue: '',
 			clientConfirm: false,
-			sanitizedValue: 0
+			sanitizedValue: 0,
+			orderId: null
 		})
 	}
 
@@ -136,8 +139,9 @@ export default class App extends Component {
 					<Dialog class='mdc-dialog--open'>
 						<Dialog.Header>Confirm value</Dialog.Header>
 						<Dialog.Body>
+							<TextField label="Add OrderID (optional)" dense value={this.state.orderId} onInput={e => this.setState({orderId: e.target.value})}/>
 							<h2>{`Pay €${sanitizedValue.toFixed(2)} with BTC`}</h2>
-							<BTCPay value={sanitizedValue} url={this.state.btcpayurl} />
+							<BTCPay value={sanitizedValue} url={this.state.btcpayurl} orderId={this.state.orderId} />
 						</Dialog.Body>
 						<Dialog.Footer>
 							<Dialog.FooterButton cancel={true} onClick={this.handleCancel}>Decline</Dialog.FooterButton>

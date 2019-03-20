@@ -119,12 +119,13 @@ html, body {
 .buttons{
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	padding: 5px;
+	padding: 0 10px 10px 10px;
 	grid-gap: 10px;
 }
 
 .buttons > button {
 	height: 100%;
+	min-height: 56px;
 }
 
 .btn{
